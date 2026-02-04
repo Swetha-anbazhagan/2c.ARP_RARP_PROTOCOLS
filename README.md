@@ -17,7 +17,37 @@ stored.
 5. Map the IP address with its MAC address and return the MAC address to client.
 P
 ## PROGRAM - ARP
+### Cilent.py
+```
+import socket 
+s=socket.socket() 
+s.bind(('localhost',8000)) 
+s.listen(5) 
+c,addr=s.accept() 
+address={"165.165.80.80":"6A:08:AA:C2","165.165.79.1":"8A:BC:E3:FA"}; 
+while True: 
+    ip=c.recv(1024).decode() 
+    try: 
+        c.send(address[ip].encode()) 
+    except KeyError: 
+        c.send("Not Found".encode()) 
+````
+
+### Server.py
+```
+import socket 
+s=socket.socket() 
+s.connect(('localhost',8000)) 
+while True:
+    ip=input("Enter logical Address : ") 
+    s.send(ip.encode()) 
+    print("MAC Address",s.recv(1024).decode())
+```
 ## OUPUT - ARP
+
+<img width="387" height="70" alt="image" src="https://github.com/user-attachments/assets/14aa5da1-4aa8-4da0-ab3a-c36739dfb5e9" />
+<img width="441" height="155" alt="image" src="https://github.com/user-attachments/assets/a8953481-c5ad-455a-9332-cb5a54a50677" />
+
 ## PROGRAM - RARP
 ## OUPUT -RARP
 ## RESULT
